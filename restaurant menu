@@ -1,0 +1,109 @@
+menu = {}
+
+def get_valid_price():
+    while True:
+        try:
+            price = float(input("Enter the price: "))
+            if price > 0:
+                return price
+            else:
+                print("Price must be greater than 0. Try again.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+def add_item():
+    item = input("Enter the item name to add: ").strip()
+    if item in menu:
+        print("Item already added")
+    else:
+        price = get_valid_price()
+        menu[item] = price
+        print(f"{item} was added with price {price}")
+
+def remove_item():
+    item = input("Enter the item name to remove: ").strip()
+    if item in menu:
+        del menu[item]
+        print(f"{item} was removed.")
+    else:
+        print("Item not found")
+
+def change_price():
+    item = input("Enter the item name to change price: ").strip()
+    if item in menu:
+        new_price = get_valid_price()
+        if menu[item] == new_price:
+            print(f"{item} already has the price {new_price}")
+        else:
+            menu[item] = new_price
+            print(f"{item} price updated to {new_price}")
+    else:
+        print("Item not found")
+
+def show_menu():
+    if len(menu) == 0:
+        print("The menu is empty")
+        return
+    print(dict(sorted(menu.items())))
+    print(f"\n You have {len(menu)} items")
+    print(f"Total prices = {sum(menu.values())}")
+
+def search_item():
+    item = input("Enter the item name to search: ").strip()
+    if item in menu:
+        print(f"{item} is available")
+    else:
+        print("Item not found")
+
+def show_summary():
+    if len(menu) == 0:
+        print("The menu is empty")
+    else:
+        print("Restaurant Menu:")
+        for item, price in menu.items():
+            print(f"Item: {item}, Price: {price}")
+        count = len(menu)
+        total = sum(menu.values())
+        print(f"You have {count} items in the menu")
+        print(f"The total price is {total}")
+
+def clear_menu():
+    menu.clear()
+    print("Menu cleared!")
+
+def main():
+    while True:
+        print("\nRestaurant Menu")
+        print("1: Add item")
+        print("2: Remove item")
+        print("3: Change item price")
+        print("4: Show menu")
+        print("5: Search item")
+        print("6: Show summary")
+        print("7: Clear menu")
+        print("8: Exit")
+
+        choice = input("Enter your choice (1-8): ").strip()
+
+        if choice == '1':
+            add_item()
+        elif choice == '2':
+            remove_item()
+        elif choice == '3':
+            change_price()
+        elif choice == '4':
+            show_menu()
+        elif choice == '5':
+            search_item()
+        elif choice == '6':
+            show_summary()
+        elif choice == '7':
+            clear_menu()
+        elif choice == '8':
+            print("Enjoy")
+            break
+        else:
+            print("Invalid choice. Try again.")
+
+if __name__ == "__main__":
+    main()
